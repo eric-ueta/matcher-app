@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import React, { Ref, useCallback, useRef } from 'react';
 import { useContext } from 'react';
-import { Alert, StyleSheet, TextInput, View } from 'react-native';
-import { FormProps, ILoginFormData } from '../../@types/forms';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { ILoginFormData } from '../../@types/forms';
 import colors from '../../config/colors';
 import { AuthContext } from '../../contexts/authContext';
 import { useValidations } from '../../hooks/validationHook';
@@ -24,7 +24,9 @@ const LoginForm: React.FC = () => {
 
       if (response) {
         AsyncStorage.setItem('authToken', response.token);
+        AsyncStorage.setItem('signedIn', 'true');
         authContext.setAuthToken(response.token);
+        authContext.setSignedIn(true);
       } else {
         console.log(response);
       }

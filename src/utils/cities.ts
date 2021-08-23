@@ -1,48 +1,53 @@
 export const cities = [
+    {
+    "id": 0,
+    "name": "Por favor, selecione uma cidade",
+    "state_id": -1
+    },
+    {
+    "id": 1,
+    "name": "Afonso Cláudio",
+    "state_id": 8
+    },
   {
-      "id": 1,
-      "name": "Afonso Cláudio",
-      "state_id": 8
+    "id": 2,
+    "name": "Água Doce do Norte",
+    "state_id": 8
   },
   {
-      "id": 2,
-      "name": "Água Doce do Norte",
-      "state_id": 8
+    "id": 3,
+    "name": "Águia Branca",
+    "state_id": 8
   },
   {
-      "id": 3,
-      "name": "Águia Branca",
-      "state_id": 8
+    "id": 4,
+    "name": "Alegre",
+    "state_id": 8
   },
   {
-      "id": 4,
-      "name": "Alegre",
-      "state_id": 8
+    "id": 5,
+    "name": "Alfredo Chaves",
+    "state_id": 8
   },
   {
-      "id": 5,
-      "name": "Alfredo Chaves",
-      "state_id": 8
+    "id": 6,
+    "name": "Alto Rio Novo",
+    "state_id": 8
   },
   {
-      "id": 6,
-      "name": "Alto Rio Novo",
-      "state_id": 8
+    "id": 7,
+    "name": "Anchieta",
+    "state_id": 8
   },
   {
-      "id": 7,
-      "name": "Anchieta",
-      "state_id": 8
+    "id": 8,
+    "name": "Apiacá",
+    "state_id": 8
   },
   {
-      "id": 8,
-      "name": "Apiacá",
-      "state_id": 8
-  },
-  {
-      "id": 9,
-      "name": "Aracruz",
-      "state_id": 8
+    "id": 9,
+    "name": "Aracruz",
+    "state_id": 8
   },
   {
       "id": 10,

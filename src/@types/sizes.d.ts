@@ -26,5 +26,6 @@ export type ISizes = {
   icon: {
     default: number;
     small: number;
+    large: number;
   };
 };

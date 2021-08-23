@@ -24,7 +24,6 @@ export const useValidations = () => {
       .min(6, 'Mínimo 6 caracteres')
       .max(100, 'Máximo 100 caracteres'),
     name: Yup.string().label('Nome').required('Nome obrigatório'),
-    phone: Yup.string().label('Celular').required('Celular obrigatório'),
   });
 
   return {

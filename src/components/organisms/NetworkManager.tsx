@@ -3,12 +3,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { AuthContext } from '../../contexts/authContext';
 import toast from '../../utils/toast';
+import Env from '../../../env';
 
 // Axios default setup
 export const API = axios.create();
 
 API.defaults.timeout = 15000;
-API.defaults.baseURL = 'http://192.168.0.6:3333/api/v1';
+API.defaults.baseURL = Env.APP_URL;
 
 export const NetworkManager: React.FC = props => {
   const { authToken } = useContext(AuthContext);
@@ -55,6 +56,14 @@ export const NetworkManager: React.FC = props => {
           switch (error.response.status) {
             case 401: {
             }
+          }
+
+          if (error.response?.data.message) {
+            toast.showFail(error.response?.data.message);
+          }
+
+          if (error.response?.data?.errors[0].message) {
+            toast.showFail(error.response?.data?.errors[0].message);
           }
         }
 

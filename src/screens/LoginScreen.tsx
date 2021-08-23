@@ -1,17 +1,15 @@
 import { useKeyboard } from '@react-native-community/hooks';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Image, StyleSheet, View, ImageBackground } from 'react-native';
-
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { ILoginFormData } from '../@types/forms';
 import { LoginScreenProps } from '../@types/navigation';
 //@ts-ignore
 import bg from '../assets/backgrounds/login_bg.png';
 //@ts-ignore
 import icon from '../assets/icons/matcher_img.png';
 import LargeText from '../components/atoms/LargeText';
-import SmallText from '../components/atoms/SmallText';
 import LoginForm from '../components/organisms/LoginForm';
+import colors from '../config/colors';
 import { sizes } from '../config/sizes';
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
@@ -71,6 +69,7 @@ const styles = StyleSheet.create({
   },
   signUp: {
     flex: 1,
+    color: colors.white,
     textAlignVertical: 'center',
     textDecorationLine: 'underline',
   },

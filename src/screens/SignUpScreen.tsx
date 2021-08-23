@@ -4,28 +4,33 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../config/colors';
 import { sizes } from '../config/sizes';
-import { launchImageLibrary } from 'react-native-image-picker';
-import UserDataForm from '../components/organisms/userDataForm';
+import { Asset, launchImageLibrary } from 'react-native-image-picker';
+import UserDataForm from '../components/organisms/UserDataForm';
 //@ts-ignore
 import defaultUser from '../assets/icons/default-user.png';
+import { SignUpScreenProps } from '../@types/navigation';
 
-const SignUpScreen: React.FC = () => {
-  const [fileUri, setFileUri] = useState<string | null>(null);
+const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
+  const [file, setFile] = useState<Asset | null>(null);
 
   const pickImage = () => {
     launchImageLibrary({ mediaType: 'photo' }, res => {
-      if (res?.assets?.[0]?.uri) {
-        setFileUri(res.assets[0].uri);
+      if (res?.assets?.[0]) {
+        setFile(res.assets[0]);
       }
     });
   };
 
   const renderFileUri = () => {
-    if (fileUri) {
-      return <Image source={{ uri: fileUri }} style={styles.image} />;
+    if (file) {
+      return <Image source={{ uri: file.uri }} style={styles.image} />;
     } else {
       return <Image source={defaultUser} style={styles.image} />;
     }
+  };
+
+  const onSubmitSuccess = () => {
+    navigation.replace('Preferences');
   };
 
   return (
@@ -43,7 +48,7 @@ const SignUpScreen: React.FC = () => {
           style={styles.pencil}
         />
       </Pressable>
-      <UserDataForm />
+      <UserDataForm imgInfo={file} onSuccess={onSubmitSuccess} />
     </KeyboardAwareScrollView>
   );
 };

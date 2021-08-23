@@ -21,9 +21,14 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const getToken = async () => {
     const token = await AsyncStorage.getItem('authToken');
+    const signedIn = await AsyncStorage.getItem('signedIn');
 
     if (token) {
       setAuthToken(token);
+    }
+
+    if (signedIn) {
+      setSignedIn(true);
     }
   };
 

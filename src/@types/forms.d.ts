@@ -12,3 +12,11 @@ export type IUserFormData = {
   cityId: string;
   gender: string;
 };
+
+export type IPreferencesFormData = {
+  about: string;
+  minimumAge: number;
+  maximumAge: number;
+  gender: string;
+  interestIds: Array<number>;
+};

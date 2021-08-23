@@ -39,7 +39,7 @@ const Button: React.FC<ButtonProps> = props => {
       {props.isLoading ? (
         <ActivityIndicator
           size="large"
-          color={props.refreshColor ?? colors.primary}
+          color={props.refreshColor ?? colors.white}
         />
       ) : (
         <Text

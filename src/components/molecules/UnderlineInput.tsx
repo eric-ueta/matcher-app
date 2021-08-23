@@ -24,6 +24,7 @@ const UnderlineInput = forwardRef<TextInput, UnderlineInputProps>(
           />
         ) : (
           <TextInputMask
+            ref={ref}
             type={'cel-phone'}
             placeholderTextColor={colors.placeholder}
             style={{ color: colors.black, fontSize: 15 }}

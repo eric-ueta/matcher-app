@@ -1,6 +1,8 @@
 export default {
   primary: '#8000ff',
   secondary: '#420999',
+  terciary: '#d81df5',
+  backgroundSecondary: '#8000FF',
   background: '#EBEBEB',
   header: '#111048',
   text: {
@@ -18,7 +20,10 @@ export default {
   },
   error: '#FF0000',
   red: '#FF0000',
-  black: 'black',
+  black: '#000000',
+  blue: 'blue',
+  lime: 'lime',
+  white: '#FFFFFF',
   interactive: '#32BCE8',
   placeholder: '#BABABA',
   transparent: 'rgba(0,0,0,0)',

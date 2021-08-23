@@ -1025,6 +1025,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@ptomasroos/react-native-multi-slider@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@ptomasroos/react-native-multi-slider/-/react-native-multi-slider-2.2.2.tgz#35a97fb8c355627c6a2ded010b360ac5728b44ad"
+  integrity sha512-HWyCnRD3Z3SbHK2FLWYmBBqd1B4iXipeKv1+AK0FoY/CElEDTEixHE8hN60TsqxalPrznn798LE2Q4tHuCiyaA==
+
 "@react-native-async-storage/async-storage@^1.15.6":
   version "1.15.6"
   resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.15.6.tgz#a4fd461d2d891326e006d2284d060229f6c2b328"
@@ -5765,6 +5770,13 @@ react-native-masked-text@^1.13.0:
     date-and-time "0.9.0"
     tinymask "1.0.2"
 
+react-native-multiple-select@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/react-native-multiple-select/-/react-native-multiple-select-0.5.6.tgz#e13a362f1730d6988ed57cfe310b2e7a84e6f7f6"
+  integrity sha512-I6H7dcVZLy2ToyJ9mv0ANIDnBIcrUfVyEN3jCgPNG8sLyK6JMMNgJwqlJxrlPOaJVjiDjHkF0viu6LjohQFhhQ==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-safe-area-context@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.3.0.tgz#6e0b45baa031589ec9c54f8359ace166a36aa5e5"
@@ -5776,11 +5788,6 @@ react-native-screens@^3.5.0:
   integrity sha512-xew4x0YX0RaDduNYM4gZXkphPwGZIbbu9fTU85xOtT1tOUPm3OU4pFMiN6PF54haMCsaMQRvdOXvLicUVRiptA==
   dependencies:
     warn-once "^0.1.0"
-
-react-native-sectioned-multi-select@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/react-native-sectioned-multi-select/-/react-native-sectioned-multi-select-0.8.1.tgz#5ec8e4fe4136c36dc5df1222b288896760e43c86"
-  integrity sha512-iH/5PHBo64yFhKzjd+6sCG0aEvgDnUwpn3I7R0ohcGo/+gJdw47mYmJMTwJTmR9JqBFXHx+2bkQi4ij2ghfqRQ==
 
 react-native-size-matters@^0.4.0:
   version "0.4.0"

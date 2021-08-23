@@ -22,7 +22,7 @@ const LargeText: React.FC<LargeTextProps> = ({ children, style, ...props }) => {
 
 const styles = StyleSheet.create({
   container: {
-    color: colors.text.default,
+    color: colors.black,
   },
 });
 

@@ -5,8 +5,7 @@ export type RootStackParamList = {
   SignUp: undefined;
   Splash: undefined;
   Auth: undefined;
-  // Profile: { userId: string };
-  // Feed: { sort: 'latest' | 'top' } | undefined;
+  Preferences: undefined;
 };
 
 export type LoginScreenNavigationProp = StackNavigationProp<
@@ -16,4 +15,13 @@ export type LoginScreenNavigationProp = StackNavigationProp<
 
 export type LoginScreenProps = {
   navigation: LoginScreenNavigationProp;
+};
+
+export type SignUpScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'SignUp'
+>;
+
+export type SignUpScreenProps = {
+  navigation: SignUpScreenNavigationProp;
 };

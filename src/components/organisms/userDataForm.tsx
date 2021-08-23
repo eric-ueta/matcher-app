@@ -1,12 +1,14 @@
 import { Picker } from '@react-native-picker/picker';
 import { Formik } from 'formik';
-import React, { useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import React, { useCallback, useRef, useState } from 'react';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { IUserFormData } from '../../@types/forms';
 import colors from '../../config/colors';
 import { sizes } from '../../config/sizes';
 import { useValidations } from '../../hooks/validationHook';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import userService from '../../services/userService';
 import { cities } from '../../utils/cities';
 import { formatDate } from '../../utils/dateUtil';
 import { states } from '../../utils/states';
@@ -14,12 +16,31 @@ import Button from '../atoms/Button';
 import MediumText from '../atoms/MediumText';
 import SmallText from '../atoms/SmallText';
 import UnderlineInput from '../molecules/UnderlineInput';
+import gender from '../../utils/genders';
+import genders from '../../utils/genders';
+import toast from '../../utils/toast';
+import imageService from '../../services/imageService';
+import authService from '../../services/authService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/authContext';
+import { Asset } from 'react-native-image-picker';
+import { subYears } from 'date-fns';
+import { useEffect } from 'react';
 
-const UserDataForm: React.FC = () => {
+type UserDataFormProps = {
+  imgInfo: null | Asset;
+  onSuccess: () => void;
+};
+
+const UserDataForm: React.FC<UserDataFormProps> = ({ imgInfo, onSuccess }) => {
   const { userDataValidation } = useValidations();
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedGender, setSelectedGender] = useState('x');
   const [show, setShow] = useState(false);
+  const phoneRef = useRef();
+  const { setAuthToken, setSignedIn, authToken } = useContext(AuthContext);
 
   const showDatePicker = () => setShow(true);
 
@@ -28,16 +49,73 @@ const UserDataForm: React.FC = () => {
     phone: '',
     email: '',
     password: '',
-    birth: new Date(),
+    birth: subYears(new Date(), 18),
     cityId: '',
     gender: '',
+  };
+
+  const onDataSubmit = async (values: IUserFormData, form: any) => {
+    const { email, birth, cityId, gender, name, password } = values;
+
+    const phoneRaw = phoneRef.current.getRawValue();
+
+    if (!imgInfo) {
+      toast.showFail('Imagem obrigatória');
+      form.setSubmitting(false);
+      return;
+    }
+
+    if (!gender) {
+      toast.showFail('Gênero obrigatório');
+      form.setSubmitting(false);
+      return;
+    }
+
+    if (!cityId) {
+      toast.showFail('Cidade obrigatória');
+      form.setSubmitting(false);
+      return;
+    }
+
+    const response = await userService.signUp(
+      name,
+      email,
+      password,
+      phoneRaw,
+      birth,
+      cityId as unknown as number,
+      gender,
+    );
+
+    if (response) {
+      const login = await authService.login(email, password);
+
+      if (login) {
+        // AsyncStorage.setItem('authToken', login.token);
+        setAuthToken(login.token);
+
+        const imageReponse = await imageService.postImage(
+          imgInfo,
+          true,
+          login.token,
+        );
+
+        if (imageReponse) {
+          onSuccess();
+        } else {
+          console.log('deu n');
+        }
+      }
+    }
+
+    form.setSubmitting(false);
   };
 
   return (
     <Formik
       initialValues={userFormData}
       validationSchema={userDataValidation}
-      onSubmit={() => {}}>
+      onSubmit={onDataSubmit}>
       {({
         handleChange,
         setFieldValue,
@@ -107,12 +185,41 @@ const UserDataForm: React.FC = () => {
                   <MediumText style={styles.label}>Celular</MediumText>
                 </View>
                 <UnderlineInput
+                  ref={phoneRef}
                   value={values.phone}
                   phoneMask
                   placeholder="Celular"
                   onChangeText={handleChange('phone')}
                   error={errors.phone}
                 />
+              </View>
+            </View>
+
+            <View style={styles.inputRow}>
+              <View>
+                <View style={styles.inputLabel}>
+                  <MediumText style={styles.label}>Gênero</MediumText>
+                </View>
+                <Picker
+                  selectedValue={selectedGender}
+                  dropdownIconColor={colors.secondary}
+                  onValueChange={itemValue => {
+                    if (itemValue != 'x') {
+                      setSelectedGender(itemValue);
+                      setFieldValue('gender', itemValue);
+                    }
+                  }}>
+                  {genders.map(gender => {
+                    return (
+                      <Picker.Item
+                        key={gender.gender}
+                        color={colors.black}
+                        label={gender.label}
+                        value={gender.gender}
+                      />
+                    );
+                  })}
+                </Picker>
               </View>
             </View>
 
@@ -143,7 +250,7 @@ const UserDataForm: React.FC = () => {
                   is24Hour={true}
                   display="default"
                   onChange={(event, selectedDate) => {
-                    const currentDate = selectedDate || date;
+                    const currentDate = selectedDate || values.birth;
                     setShow(Platform.OS === 'ios');
                     setFieldValue('birth', currentDate);
                   }}
@@ -160,8 +267,10 @@ const UserDataForm: React.FC = () => {
                   selectedValue={selectedState}
                   dropdownIconColor={colors.secondary}
                   onValueChange={itemValue => {
-                    setSelectedCity(null);
-                    setSelectedState(itemValue);
+                    if (itemValue > 0) {
+                      setSelectedCity(null);
+                      setSelectedState(itemValue);
+                    }
                   }}>
                   {states.map(state => {
                     return (
@@ -185,17 +294,35 @@ const UserDataForm: React.FC = () => {
                   </View>
                   <Picker
                     selectedValue={selectedCity}
-                    onValueChange={itemValue => setSelectedCity(itemValue)}>
+                    onValueChange={itemValue => {
+                      if (itemValue != null && itemValue > 0) {
+                        setSelectedCity(itemValue);
+                        setFieldValue('cityId', itemValue);
+                      }
+                    }}>
                     {cities.map(city => {
-                      if (city.state_id === selectedState) {
-                        return (
-                          <Picker.Item
-                            key={city.id}
-                            color={colors.black}
-                            label={city.name}
-                            value={city.id}
-                          />
-                        );
+                      if (!selectedCity) {
+                        if (city.state_id === selectedState || city.id === 0) {
+                          return (
+                            <Picker.Item
+                              key={city.id}
+                              color={colors.black}
+                              label={city.name}
+                              value={city.id}
+                            />
+                          );
+                        }
+                      } else {
+                        if (city.state_id === selectedState) {
+                          return (
+                            <Picker.Item
+                              key={city.id}
+                              color={colors.black}
+                              label={city.name}
+                              value={city.id}
+                            />
+                          );
+                        }
                       }
                     })}
                   </Picker>
@@ -203,7 +330,12 @@ const UserDataForm: React.FC = () => {
               </View>
             )}
             <View style={{ flex: 1, justifyContent: 'center' }}>
-              <Button title="Salvar" />
+              <Button
+                onPress={handleSubmit}
+                disabled={isValidating || isSubmitting}
+                isLoading={isValidating || isSubmitting}
+                title="Salvar"
+              />
             </View>
           </ScrollView>
         );

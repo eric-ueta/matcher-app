@@ -11,6 +11,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-async-storage/async-storage": "^1.15.6",
     "@react-native-community/datetimepicker": "^3.5.2",
     "@react-native-community/hooks": "^2.6.0",
@@ -28,9 +29,9 @@
     "react-native-image-picker": "^4.0.6",
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-masked-text": "^1.13.0",
+    "react-native-multiple-select": "^0.5.6",
     "react-native-safe-area-context": "^3.3.0",
     "react-native-screens": "^3.5.0",
-    "react-native-sectioned-multi-select": "^0.8.1",
     "react-native-size-matters": "^0.4.0",
     "react-native-snackbar": "^2.4.0",
     "react-native-vector-icons": "^8.1.0",

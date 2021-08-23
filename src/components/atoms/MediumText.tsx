@@ -26,7 +26,7 @@ const MediumText: React.FC<MediumTextTypography> = ({
 
 const styles = StyleSheet.create({
   container: {
-    color: colors.text.default,
+    color: colors.black,
   },
 });
 

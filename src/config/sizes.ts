@@ -30,5 +30,6 @@ export const sizes: ISizes = {
   icon: {
     small: 20,
     default: 30,
+    large: 50,
   },
 };

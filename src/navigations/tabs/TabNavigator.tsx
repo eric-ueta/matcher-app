@@ -8,6 +8,8 @@ import { useContext } from 'react';
 import { AuthContext } from '../../contexts/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MatchesScreen from '../../screens/MatchesScreen';
+import SignUpScreen from '../../screens/SignUpScreen';
+import UpdateUserScreen from '../../screens/UpdateUserScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -46,12 +48,13 @@ const AuthTabs = () => {
       <Tab.Screen
         name="Profile"
         options={{
+          unmountOnBlur: true,
           tabBarLabel: 'Perfil',
           headerTitle: 'Seu Perfil',
           headerTintColor: colors.white,
           headerStyle: { backgroundColor: colors.secondary },
         }}
-        component={HomeScreen}
+        component={UpdateUserScreen}
       />
       <Tab.Screen
         name="Home"

@@ -138,7 +138,9 @@ const HomeScreen: React.FC = () => {
                 height={500}
                 width={500}
                 source={{
-                  uri: `${env.APP_URL}/image/${currentCandidate.images[0].id}`,
+                  uri: `${env.APP_URL}/image/${
+                    currentCandidate.images.find(img => img.is_profile)?.id
+                  }`,
                 }}
                 style={{ height: '100%', width: '100%', flex: 1 }}
                 resizeMode="contain"

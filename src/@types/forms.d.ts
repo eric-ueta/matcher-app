@@ -20,3 +20,12 @@ export type IPreferencesFormData = {
   gender: string;
   interestIds: Array<number>;
 };
+
+export type IUpdateUserFormData = {
+  about: string;
+  phone: number;
+  minimumAge: number;
+  maximumAge: number;
+  gender: string;
+  interestIds: Array<number>;
+};

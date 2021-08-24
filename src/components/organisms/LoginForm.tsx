@@ -23,6 +23,7 @@ const LoginForm: React.FC = () => {
       const response = await authService.login(values.email, values.password);
 
       if (response) {
+        console.log(response);
         AsyncStorage.setItem('authToken', response.token);
         AsyncStorage.setItem('signedIn', 'true');
         authContext.setAuthToken(response.token);

@@ -41,7 +41,9 @@ const MatchesScreen: React.FC = () => {
                   width={70}
                   height={70}
                   source={{
-                    uri: `${env.APP_URL}/image/${match.images[0].id}`,
+                    uri: `${env.APP_URL}/image/${
+                      match.images.find(img => img.is_profile)?.id
+                    }`,
                   }}
                   style={styles.image}
                   resizeMode="cover"

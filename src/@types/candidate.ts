@@ -17,4 +17,9 @@ export type Candidate = {
 
 export type UserImage = {
   id: number;
+  path: string;
+  format: string;
+  size: number;
+  user_id: number;
+  is_profile: boolean;
 };

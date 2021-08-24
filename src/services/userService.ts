@@ -1,5 +1,6 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { Candidate } from '../@types/candidate';
+import { User } from '../@types/user';
 import { API } from '../components/organisms/NetworkManager';
 
 export default {
@@ -58,6 +59,39 @@ export default {
       })
       .catch((error: AxiosError) => {
         return [];
+      });
+  },
+  getUser: async (): Promise<User> => {
+    return API.get('/user')
+      .then((response: AxiosResponse) => {
+        return response.data;
+      })
+      .catch((error: AxiosError) => {
+        return [];
+      });
+  },
+
+  putUser: async (
+    about,
+    phone,
+    gender,
+    maximumAge,
+    minimumAge,
+    interestIds,
+  ): Promise<boolean> => {
+    return API.put('/user', {
+      about,
+      phone,
+      gender,
+      maximumAge,
+      minimumAge,
+      interestIds,
+    })
+      .then((response: AxiosResponse) => {
+        return true;
+      })
+      .catch((error: AxiosError) => {
+        return false;
       });
   },
 };
